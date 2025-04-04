@@ -28,7 +28,7 @@ def test_lru_cache():
     put("Phone1", "Samsung")
     put("Phone2", "Samsung") 
     show_cache()
-    #assert cache == {"Dog": "Pet", "Phone1": "Samsung", "Phone2": "Samsung"}
+    assert cache == {"Dog": "Pet", "Phone1": "Samsung", "Phone2": "Samsung"}
 
     print("\nAll tests passed successfully!")
 

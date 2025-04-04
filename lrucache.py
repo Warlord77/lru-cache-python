@@ -33,37 +33,3 @@ def show_cache():
     print("Cache contents:", cache)  
     print("Usage order (oldest to newest):", recently_used)  
     return cache
-
-# Testing the updated LRU cache
-if __name__ == "__main__":  
-    print("\nStep 1: PUT 'Dog' -> 'Animal'")  
-    put("Dog", "Animal")  
-    show_cache()  
-
-    print("\nStep 2: PUT 'CAT' -> 'Animal' (same value, different key)")  
-    put("CAT", "Animal")  
-    show_cache()  
-
-    print("\nStep 3: PUT 'NOKIA' -> 'Phone'")  
-    put("NOKIA", "Phone")  
-    show_cache()  
-
-    print("\nStep 4: GET 'GOAT' (should return None)")  
-    print("Retrieved value:", get("GOAT"))  
-    show_cache()  
-
-    print("\nStep 5: GET 'CAT' (should be found)")  
-    print("Retrieved value:", get("CAT"))  
-    show_cache()  
-
-    print("\nStep 6: REMOVE 'DOG'")  
-    remove("Dog")  
-    show_cache()  
-
-    print("\nStep 7: ADD 'RAMBO' -> 'Movie'")  
-    put("RAMBO", "Movie")  
-    show_cache()  
-
-    print("\nStep 8: ADD 'CROCS' -> 'Shoes' (should evict LRU item)")  
-    put("CROCS", "Shoes")  
-    show_cache()  
