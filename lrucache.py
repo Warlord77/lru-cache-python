@@ -32,6 +32,7 @@ def remove(key):
 def show_cache():  
     print("Cache contents:", cache)  
     print("Usage order (oldest to newest):", recently_used)  
+    return cache
 
 # Testing the updated LRU cache
 if __name__ == "__main__":  
