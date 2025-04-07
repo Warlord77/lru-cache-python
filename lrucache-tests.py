@@ -3,8 +3,8 @@ cache = {}
 frequency = {}
 max_size = 5
 
-def test_lfu_cache_in_action():
-    print("\nTest: LFU Cache in Action")
+def test_lru_cache_in_action():
+    print("\nTest: LRU Cache in Action")
 
     items = {"A": 1, "B": 2, "D": 4, "E": 5, "F": 6}
     for key, value in items.items():
@@ -26,7 +26,7 @@ def test_lfu_cache_in_action():
     print("\nRemoving item B from the cache:")
     remove("B")
     show_cache()
-    
+
     access_order = ['D', 'E', 'A', 'B', 'F']  
     for key in access_order:
         print(f"\nAccessing {key}:")
@@ -37,4 +37,4 @@ def test_lfu_cache_in_action():
     show_cache()  
 
 if __name__ == "__main__":
-    test_lfu_cache_in_action()
+    test_lru_cache_in_action()
