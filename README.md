@@ -103,3 +103,65 @@ show_cache()
 # Cache contents: {'A': 1, 'B': 2, 'D': 4, 'E': 5, 'F': 6}
 # Access frequency: {'A': 3, 'B': 2, 'D': 1, 'E': 1, 'F': 1}
 ```
+
+## Test-Cases-Output
+```
+Test: LRU Cache in Action
+
+Initial cache and frequency:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 1, 'B': 1, 'D': 1, 'E': 1, 'F': 1}
+
+Accessing A:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 2, 'B': 1, 'D': 1, 'E': 1, 'F': 1}
+
+Accessing B:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 2, 'B': 2, 'D': 1, 'E': 1, 'F': 1}
+
+Accessing D:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 2, 'B': 2, 'D': 2, 'E': 1, 'F': 1}
+
+Accessing E:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 2, 'B': 2, 'D': 2, 'E': 2, 'F': 1}
+
+Accessing F:
+Cache contents: {'A': 'Value 1', 'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6'}
+Access frequency: {'A': 2, 'B': 2, 'D': 2, 'E': 2, 'F': 2}
+
+Adding a new item G to the cache:
+Evicting A with frequency 2
+Cache contents: {'B': 'Value 2', 'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'B': 2, 'D': 2, 'E': 2, 'F': 2, 'G': 1}
+
+Removing item B from the cache:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 2, 'E': 2, 'F': 2, 'G': 1}
+
+Accessing D:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 3, 'E': 2, 'F': 2, 'G': 1}
+
+Accessing E:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 3, 'E': 3, 'F': 2, 'G': 1}
+
+Accessing A:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 3, 'E': 3, 'F': 2, 'G': 1}
+
+Accessing B:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 3, 'E': 3, 'F': 2, 'G': 1}
+
+Accessing F:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G'}
+Access frequency: {'D': 3, 'E': 3, 'F': 3, 'G': 1}
+
+Adding a new item H to the cache:
+Cache contents: {'D': 'Value 4', 'E': 'Value 5', 'F': 'Value 6', 'G': 'Value G', 'H': 'Value H'}
+Access frequency: {'D': 3, 'E': 3, 'F': 3, 'G': 1, 'H': 1}
+```
