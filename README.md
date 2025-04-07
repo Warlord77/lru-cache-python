@@ -1,56 +1,112 @@
-# LRU Cache Implementation in Python
+# Frequency-Based Cache Implementation
 
-## Overview
-This repository contains my implementation of a Least Recently Used (LRU) cache in Python. An LRU cache is a type of cache that has a specified maximum capacity and removes the least recently accessed items when the cache reaches its capacity limit.
+A simple Python cache implementation that uses a frequency-based eviction policy. This implementation tracks how often each key is accessed and removes the least frequently used item when the cache reaches its capacity.
 
-## Problem Statement
-Create an LRU cache in Python with the following requirements:
+## Features
 
-1. Implement `get`, `put`, and `remove` functions
-2. Achieve O(1) time complexity for all operations
-3. Support a configurable maximum cache size (not implemented right now)
+- Fixed-size cache with configurable maximum capacity
+- Frequency-based eviction policy (LFU - Least Frequently Used)
+- Basic cache operations: get, put, and remove
+- Cache visualization functionality
 
-### Assumptions
-Note:  This is not a time based implementation
+## Usage
 
-### Solution Approach
-My implementation uses two main data structures. 
+```python
+# Initialize the cache (already done in the implementation)
+# Default max_size is 5
+cache = {}
+frequency = {}
+max_size = 5
 
-1. cache (Python dictionary): Stores key-value pairs for O(1) lookups.
-2. recently_used (Python list): Maintains the access order of keys.
+# Add items to the cache
+put("key1", "value1")
+put("key2", "value2")
 
-#### Time Complexity
-All operations (get, put, remove) have O(1) time complexity except for the list operations which are O(n) in the worst case.\
-However, since the cache size is typically fixed and small, this can be considered constant time for practical purposes.
+# Retrieve items
+value = get("key1")  # Returns "value1" and increases access frequency
 
-### Functions Implemented 
-##### `get(key)`
-Returns the value associated with the key if it exists. \
-Updates the key's position in the recently_used list to mark it as most recently used. \
-Returns None if the key doesn't exist in the cache.
+# Remove items
+removed = remove("key1")  # Returns True if successful
 
-##### `put(key, value)`
-If the key already exists, updates its value and marks it as most recently used. \
-If the key doesn't exist then\
-       1. If the cache is at maximum capacity, removes the least recently used item.\
-       2. Adds the new key-value pair to the cache.\
-       3. Adds the key to the end of the recently_used list
+# Display cache contents and access frequencies
+show_cache()
+```
 
+## API Reference
 
-#### `remove(key)`
-Removes the key-value pair from the cache if it exists.\
-Removes the key from the recently_used list.\
-Returns True if the key was found and removed, False otherwise.
+### `get(key)`
 
-#### `show_cache()`
-Helper function that displays the current state of the cache.\
-Shows both the cache contents and the usage order of keys.\
+Retrieves a value from the cache by its key.
+
+- If the key exists, increments its access frequency and returns the associated value
+- If the key doesn't exist, returns `None`
+
+### `put(key, value)`
+
+Adds or updates a key-value pair in the cache.
+
+- If the key already exists, updates its value and increments its access frequency
+- If the key doesn't exist and the cache is full, removes the least frequently used item before adding the new one
+- If the key doesn't exist and the cache has space, adds the new key-value pair with an initial frequency of 1
+
+### `remove(key)`
+
+Removes a key-value pair from the cache.
+
+- If the key exists, removes it from both the cache and frequency dictionaries and returns `True`
+- If the key doesn't exist, returns `False`
+
+### `show_cache()`
+
+Displays the current contents of the cache and the access frequency for each key.
 Returns the current cache dictionary.
-______________________________________________________________________________________________________________________
-### Testing
-The implementation includes comprehensive tests to verify correctness\
-Adding elements to the cache\
-Retrieving existing and non-existing elements\
-Removing elements\
-Handling capacity limits (evicting least recently used items)\
-Updating values for existing keys
+
+## Time Complexity
+
+| Operation | Average Case | Worst Case | Notes |
+|-----------|--------------|------------|-------|
+| `get(key)` | O(1) | O(1) | Dictionary lookup and increment operations are constant time |
+| `put(key, value)` | O(1) | O(n) | When cache is full, finding the least frequent item takes O(n) time where n is the current cache size |
+| `remove(key)` | O(1) | O(1) | Dictionary deletion operations are constant time |
+| `show_cache()` | O(1) | O(1) | Printing dictionaries is constant time |
+
+The most expensive operation is the eviction policy in the `put()` method when the cache is full. The implementation uses `min(frequency, key=frequency.get)` which requires iterating through all keys in the frequency dictionary to find the one with the minimum value, resulting in O(n) time complexity.
+
+### Potential Optimizations
+
+To improve the time complexity of the eviction policy:
+
+1. **Maintain a sorted data structure**: Keep keys sorted by frequency, which would improve eviction to O(log n) but increase the complexity of updates.
+2. **Use a min-heap**: Store keys in a min-heap based on frequency, which would make finding the minimum O(1) and updates O(log n).
+3. **Keep a separate dictionary of frequency buckets**: Group keys by their frequency count, making it possible to find the least frequent keys in O(1) time.
+
+## Example
+
+```python
+# Add some items
+put("A", 1)
+put("B", 2)
+put("C", 3)
+
+# Access some items multiple times
+get("A")
+get("A")
+get("B")
+
+# Show the cache state
+show_cache()
+# Output:
+# Cache contents: {'A': 1, 'B': 2, 'C': 3}
+# Access frequency: {'A': 3, 'B': 2, 'C': 1}
+
+# Add more items to trigger eviction
+put("D", 4)
+put("E", 5)
+put("F", 6)  # This will evict 'C' since it has the lowest frequency
+
+# Show the cache state again
+show_cache()
+# Output:
+# Cache contents: {'A': 1, 'B': 2, 'D': 4, 'E': 5, 'F': 6}
+# Access frequency: {'A': 3, 'B': 2, 'D': 1, 'E': 1, 'F': 1}
+```

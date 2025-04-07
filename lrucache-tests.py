@@ -3,7 +3,7 @@ from lrucache import get , put , remove, show_cache
 def test_lru_cache():
     global cache, recently_used, max_size
     cache = {}  
-    recently_used = []  
+    recently_used = {} 
     max_size = 3  
 
     print("TEST 1: Adding elements")
