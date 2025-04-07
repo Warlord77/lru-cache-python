@@ -1,37 +1,40 @@
-from lrucache import get , put , remove, show_cache
+from lrucache import get, put, remove, show_cache
+cache = {}
+frequency = {}
+max_size = 5
 
-def test_lru_cache():
-    global cache, recently_used, max_size
-    cache = {}  
-    recently_used = {} 
-    max_size = 3  
+def test_lfu_cache_in_action():
+    print("\nTest: LFU Cache in Action")
 
-    print("TEST 1: Adding elements")
-    put("Dog", "Animal")
-    put("Cat", "Animal")
-    put("Nokia", "Phone")
-    cache = show_cache()
-    assert cache == {'Dog': 'Animal', 'Cat': 'Animal', 'Nokia': 'Phone'}
+    items = {"A": 1, "B": 2, "D": 4, "E": 5, "F": 6}
+    for key, value in items.items():
+        put(key, f"Value {value}")
+
+    print("\nInitial cache and frequency:")
+    show_cache()
+
+    access_order = ['A', 'B', 'D', 'E', 'F']  
+    for key in access_order:
+        print(f"\nAccessing {key}:")
+        get(key) 
+        show_cache()  
+
+    print("\nAdding a new item G to the cache:")
+    put("G", "Value G")
+    show_cache() 
+
+    print("\nRemoving item B from the cache:")
+    remove("B")
+    show_cache()
     
-    print("\nTEST 2: Retrieving elements")
-    assert get("Dog") == "Animal"  
-    assert get("Goat") is None  
-    show_cache()
+    access_order = ['D', 'E', 'A', 'B', 'F']  
+    for key in access_order:
+        print(f"\nAccessing {key}:")
+        get(key) 
+        show_cache()  
+    print("\nAdding a new item H to the cache:")
+    put("H", "Value H")
+    show_cache()  
 
-    print("\nTEST 3: Deleting elements")
-    assert remove("Dog") is True  
-    assert remove("Goat") is False  
-    show_cache()
-
-    print("\nTEST 4: Same name, different value")
-    put("Dog", "Pet")  
-    put("Phone1", "Samsung")
-    put("Phone2", "Samsung") 
-    show_cache()
-    assert cache == {"Dog": "Pet", "Phone1": "Samsung", "Phone2": "Samsung"}
-
-    print("\nAll tests passed successfully!")
-
-
-
-test_lru_cache()
+if __name__ == "__main__":
+    test_lfu_cache_in_action()

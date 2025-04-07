@@ -72,13 +72,6 @@ Returns the current cache dictionary.
 
 The most expensive operation is the eviction policy in the `put()` method when the cache is full. The implementation uses `min(frequency, key=frequency.get)` which requires iterating through all keys in the frequency dictionary to find the one with the minimum value, resulting in O(n) time complexity.
 
-### Potential Optimizations
-
-To improve the time complexity of the eviction policy:
-
-1. **Maintain a sorted data structure**: Keep keys sorted by frequency, which would improve eviction to O(log n) but increase the complexity of updates.
-2. **Use a min-heap**: Store keys in a min-heap based on frequency, which would make finding the minimum O(1) and updates O(log n).
-3. **Keep a separate dictionary of frequency buckets**: Group keys by their frequency count, making it possible to find the least frequent keys in O(1) time.
 
 ## Example
 
